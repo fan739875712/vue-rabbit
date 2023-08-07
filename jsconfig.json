@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            // vscode路径自动联想
+            "@/*":[
+                "src/*"
+            ]
+        },
+        // elementui指定全局组件类型
+        // "types": ["element-plus/global"]
+        
+    }
+}
