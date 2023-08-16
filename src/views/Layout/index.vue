@@ -17,6 +17,8 @@ onBeforeMount(()=>{
   <Fixed />
   <Header />
   <RouterView />
+  <!-- <RouterView :key="$route.fullPath"/> -->
+
   <Footer />
 </template>
 <style>

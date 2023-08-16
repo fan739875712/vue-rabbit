@@ -5,8 +5,8 @@ import HomePanel from '@/views/Home/components/HomePanel.vue';
 const hotList = ref([])
 const getHotList = async() => {
   const res = await getHotAPI()
-  console.log(res);
-  hotList.value = res.data.result 
+  // console.log(res);
+  hotList.value = res.result 
 }
 onMounted(()=>getHotList())
 </script>

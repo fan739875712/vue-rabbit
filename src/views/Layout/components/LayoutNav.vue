@@ -1,11 +1,14 @@
-<script setup lang="ts">
+<script setup lang="js">
 // import { getUserName, removeUserName } from '@/utils/userInfo'
 // import { removeToken } from '@/utils/token'
 import { useRouter } from 'vue-router'
-
+import {useUserStore} from '@/stores/user';
 const router = useRouter()
-
-const logout = () => {
+const userStore = useUserStore()
+const comfirm = () => {
+  // 退出逻辑
+  // 1.清除用户信息,
+  userStore.clearUserInfo()
   // removeToken()
   // removeUserName()
   router.push('/login')
@@ -16,11 +19,12 @@ const logout = () => {
   <nav class="app-topnav">
     <div class="container">
       <ul>
-        <template >
+        <!-- 多模板渲染 区分登录和非登录状态 -->
+        <template  v-if="userStore.userInfo.token">
           <li>
             <a href="javascript:;">
               <i class="iconfont icon-user" />
-              {{ }}
+              {{ userStore.userInfo.account }}
             </a>
           </li>
           <li>
@@ -28,7 +32,7 @@ const logout = () => {
               title="确认退出吗?"
               confirm-button-text="确认"
               cancel-button-text="取消"
-              @confirm="logout">
+              @confirm="comfirm">
               <template #reference>
                 <a href="javascript:;">退出登录</a>
               </template>
@@ -37,8 +41,11 @@ const logout = () => {
           <li><a href="javascript:;" @click="$router.push('/member/order')">我的订单</a></li>
           <li><a href="javascript:;" @click="$router.push('/member')">会员中心</a></li>
         </template>
-        <template >
-          <li><RouterLink to="/login">请先登录</RouterLink></li>
+        <template  v-else>
+          <!-- 下面两者等价 -->
+          <!-- <li><RouterLink to="/login">请先登录</RouterLink></li> -->
+          <li><a @click="$router.push('/login')">请先登录</a></li>
+
           <li><a href="javascript:;">帮助中心</a></li>
           <li><a href="javascript:;">关于我们</a></li>
         </template>

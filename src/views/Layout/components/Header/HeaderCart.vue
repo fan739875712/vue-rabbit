@@ -1,38 +1,40 @@
 <script setup>
-// import { useCartStore } from '@/stores/cart/index'
+import { useCartStore } from '@/stores/cart'
 import { computed, ref, onMounted, watch } from "vue";
 // import { getToken } from '@/utils/token'
+const cartStore = useCartStore()
+// console.log(cartStore.allCount);
 </script>
 
 <template>
   <div class="cart">
     <a class="curr" href="javascript:;">
       <i class="iconfont icon-cart" />
-      <em></em>
+      <em>{{ cartStore.cartList.length }}</em>
     </a>
     <div class="layer">
       <div class="list">
-        <div class="item" >
-          <!-- <RouterLink to="">
-            <img  >
-            <div class="center"></div>
+        <div class="item" v-for="i in cartStore.cartList" :key="i">
+          <RouterLink to="">
+            <img  i.picture>
+            <div class="center">
               <p class="name ellipsis-2">
-                {{ i }}
+                {{ i.name }}
               </p>
-              <p class="attr ellipsis">{{  }}</p>
+              <p class="attr ellipsis">{{  i.attrsText}}</p>
             </div>
             <div class="right">
-              <p class="price">&yen;{{  }}</p>
-              <p class="count">x{{  }}</p>
+              <p class="price">&yen;{{i.price  }}</p>
+              <p class="count">x{{ i.count }}</p>
             </div>
-          </RouterLink> -->
-          <i class="iconfont icon-close-new"/>
+          </RouterLink>
+          <i class="iconfont icon-close-new" @click="cartStore.delCart(i.skuId)"/>
         </div>
       </div>
       <div class="foot">
         <div class="total">
-          <p>共 {{ }} 件商品</p>
-          <p>&yen;</p>
+          <p>共 {{cartStore.allCount }} 件商品</p>
+          <p>&yen;{{ cartStore.allPrice.toFixed(2) }}</p>
         </div>
         <el-button
           size="large"
